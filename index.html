@@ -1,0 +1,1089 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MintuVerse: Happy Birthday, Scientist Dad!</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts - Inter & Space Mono -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* --- Base Body Styles --- */
+        body {
+            margin: 0;
+            font-family: 'Inter', sans-serif;
+            background: black;
+            color: #fff;
+            text-align: center;
+            overflow-x: hidden;
+        }
+
+        /* --- Section Display --- */
+        .section {
+            display: none;
+            padding: 40px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: #1a202c;
+            color: #e2e8f0;
+        }
+        .section.active {
+            display: flex;
+        }
+
+        /* --- Global Font for Code/Sci-Fi Text --- */
+        .font-mono-space {
+            font-family: 'Space Mono', monospace;
+        }
+
+        /* --- Confetti Styles --- */
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: #f00;
+            opacity: 0;
+            animation: confetti-fall linear forwards;
+            z-index: 5;
+        }
+
+        @keyframes confetti-fall {
+            0% {
+                transform: translateY(-10px) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        /* --- Landing Page Text Animation (Spark/Pulse) --- */
+        .landing-animated-text {
+            animation: text-sparkle 2s infinite alternate;
+        }
+
+        @keyframes text-sparkle {
+            0% {
+                text-shadow: 0 0 5px rgba(255,255,255,0.5), 0 0 10px rgba(129,140,248,0.7);
+                color: #e0e7ff;
+            }
+            100% {
+                text-shadow: 0 0 10px rgba(255,255,255,0.8), 0 0 20px rgba(129,140,248,1), 0 0 30px rgba(165,180,252,0.8);
+                color: #c7d2fe;
+            }
+        }
+
+        /* --- Landing Page Background (Subtle DNA/Lab Pattern) --- */
+        .landing-bg-pattern {
+            background-image: radial-gradient(#bfdbfe 1px, transparent 1px), radial-gradient(#bfdbfe 1px, transparent 1px);
+            background-size: 20px 20px;
+            background-position: 0 0, 10px 10px;
+            opacity: 0.1;
+        }
+
+        /* --- Nav Button Styles --- */
+        button.nav-btn {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background: #00ffcc;
+            border: none;
+            color: black;
+            font-weight: bold;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+        button.nav-btn:hover {
+            background-color: #00e6b8;
+            transform: translateY(-2px);
+        }
+
+        /* --- Music Player --- */
+        .music-player {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            z-index: 100;
+        }
+        .music-player button {
+            background-color: #007bff;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .music-player button:hover {
+            background-color: #0056b3;
+        }
+
+        /* --- Preloader Styles --- */
+        #preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            background: #000;
+            color: white;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 1s ease;
+        }
+
+        .atom {
+            position: relative;
+            width: 80px;
+            height: 80px;
+            transform-style: preserve-3d;
+        }
+        .electron {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border: 2px solid #00ffcc;
+            border-radius: 50%;
+            animation: spin 2s linear infinite;
+        }
+        .e1 { transform: rotateX(60deg); }
+        .e2 { transform: rotateY(60deg); }
+        .e3 { transform: rotate(45deg); }
+
+        .loading-text {
+            margin-top: 20px;
+            color: #00ffcc;
+            font-family: monospace;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* --- Guitar Vibes --- */
+        .quote {
+            font-style: italic;
+            margin-top: 20px;
+            color: #00ffcc;
+        }
+
+        /* --- Lab Results --- */
+        .lab-report {
+            background: #111;
+            padding: 20px;
+            font-family: monospace;
+            border-left: 5px solid #00ffcc;
+            margin-bottom: 30px;
+            text-align: left;
+            max-width: 400px;
+            width: 100%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .bubbling-tubes {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .tube {
+            width: 20px;
+            height: 80px;
+            background: linear-gradient(to top, #00ffcc 30%, transparent 70%);
+            animation: bubble 1s infinite alternate ease-in-out;
+            border-radius: 5px;
+        }
+        .tube:nth-child(2) { animation-delay: 0.3s; }
+        .tube:nth-child(3) { animation-delay: 0.6s; }
+
+        @keyframes bubble {
+            from { transform: scaleY(1); }
+            to { transform: scaleY(1.4); }
+        }
+
+        /* --- Space-Time Memories --- */
+        .space-bg {
+            background: radial-gradient(circle, #111 30%, #000 100%);
+            padding: 30px;
+            border-radius: 10px;
+            margin-top: 20px;
+            max-width: 600px;
+            width: 100%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .fade-text {
+            opacity: 0;
+            animation: fadeInUp 3s forwards;
+            margin-bottom: 10px;
+        }
+        .fade-text[style*="--i: 1"] { animation-delay: 0s; }
+        .fade-text[style*="--i: 2"] { animation-delay: 1s; }
+        .fade-text[style*="--i: 3"] { animation-delay: 2s; }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .rocket {
+            margin-top: 30px;
+            font-size: 1.5rem;
+            animation: float 2s infinite ease-in-out;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* --- Timeline Styles (Science Theme) --- */
+        .timeline {
+            position: relative;
+            padding: 20px 0;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            width: 4px;
+            background-color: #6366f1;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -2px;
+            border-radius: 2px;
+        }
+
+        .timeline-item {
+            padding: 10px 0;
+            position: relative;
+            width: 50%;
+        }
+
+        .timeline-item:nth-child(odd) {
+            left: 0;
+            padding-right: 30px;
+            text-align: right;
+        }
+
+        .timeline-item:nth-child(even) {
+            left: 50%;
+            padding-left: 30px;
+            text-align: left;
+        }
+
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            background-color: #6366f1;
+            border: 3px solid #fff;
+            top: 15px;
+            border-radius: 50%;
+            z-index: 1;
+        }
+
+        .timeline-item:nth-child(odd)::after {
+            right: -8px;
+        }
+
+        .timeline-item:nth-child(even)::after {
+            left: -8px;
+        }
+
+        .timeline-content {
+            background-color: #fff;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border: 1px solid #ddd;
+            color: #333;
+        }
+
+        /* --- Secret Message Scratch Card --- */
+        .scratch-card-container {
+            position: relative;
+            width: 100%;
+            max-width: 400px;
+            height: 150px;
+            margin: 20px auto;
+            background-color: #d1e7dd;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .scratch-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #4ade80;
+            background-image: linear-gradient(45deg, #4ade80 25%, #22c55e 25%, #22c55e 50%, #4ade80 50%, #4ade80 75%, #22c55e 75%, #22c55e 100%);
+            background-size: 20px 20px;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: opacity 0.5s ease-in-out;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: white;
+            font-size: 1.25rem;
+        }
+
+        .scratch-overlay.revealed {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .secret-message {
+            color: #166534;
+            font-size: 1.2rem;
+            font-weight: 600;
+            padding: 10px;
+        }
+
+        /* --- Chat Bubble Styles --- */
+        .chat-container {
+            background-color: #e0f7fa;
+            border-radius: 15px;
+            padding: 20px;
+            max-width: 400px;
+            margin: 20px auto;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            color: #333;
+        }
+
+        .chat-message {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: flex-end;
+        }
+
+        .chat-message.dad {
+            justify-content: flex-start;
+        }
+
+        .chat-message.me {
+            justify-content: flex-end;
+        }
+
+        .chat-bubble {
+            max-width: 75%;
+            padding: 10px 15px;
+            border-radius: 18px;
+            position: relative;
+            font-size: 0.95rem;
+            line-height: 1.4;
+        }
+
+        .chat-bubble.dad {
+            background-color: #ffffff;
+            color: #333;
+            border: 1px solid #e0e0e0;
+            border-bottom-left-radius: 2px;
+        }
+
+        .chat-bubble.me {
+            background-color: #93c5fd;
+            color: #fff;
+            border-bottom-right-radius: 2px;
+        }
+
+        /* --- Message Box for Errors/Confirmations --- */
+        .message-box {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #fff;
+            border: 2px solid #ef4444;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+            display: none;
+            text-align: center;
+        }
+        .message-box p {
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+            color: #333;
+        }
+        .message-box button {
+            background-color: #ef4444;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .message-box button:hover {
+            background-color: #dc2626;
+        }
+
+        /* --- Transmission Message Typing Effect --- */
+        .typing-container {
+            overflow: hidden;
+            border-right: .15em solid orange;
+            white-space: nowrap;
+            margin: 0 auto;
+            letter-spacing: .05em;
+            animation:
+                typing 3.5s steps(40, end),
+                blink-caret .75s step-end infinite;
+        }
+
+        /* The typing effect */
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+
+        /* The typewriter cursor effect */
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: orange; }
+        }
+
+        /* Photo grid for memory gallery */
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .photo-grid img {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 8px;
+            border: 2px solid #00ffcc;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            transition: transform 0.2s ease;
+        }
+        .photo-grid img:hover {
+            transform: scale(1.05);
+        }
+
+        /* Video element styling */
+        .section video {
+            width: 100%;
+            max-width: 560px;
+            height: auto;
+            border-radius: 10px;
+            border: 3px solid #00ffcc;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            margin-top: 20px;
+        }
+
+        /* General section content styling */
+        .section h1, .section h2 {
+            color: #00ffcc;
+            margin-bottom: 15px;
+        }
+        .section p, .section ul, .section blockquote {
+            color: #e2e8f0;
+            margin-bottom: 10px;
+        }
+        .section ul {
+            list-style: none;
+            padding: 0;
+        }
+        .section ul li {
+            background-color: #2d3748;
+            padding: 8px 15px;
+            border-radius: 5px;
+            margin-bottom: 5px;
+            border-left: 3px solid #00ffcc;
+            text-align: left;
+        }
+        .section blockquote {
+            font-style: italic;
+            border-left: 4px solid #00ffcc;
+            padding-left: 15px;
+            margin: 20px auto;
+            max-width: 500px;
+        }
+        .section code {
+            background-color: #2d3748;
+            padding: 5px 10px;
+            border-radius: 5px;
+            color: #00ffcc;
+            font-family: 'Space Mono', monospace;
+            display: inline-block;
+            margin-top: 10px;
+        }
+
+        /* Nobel Prize section styling */
+        .nobel-prize-section {
+            background-color: #111;
+            padding: 30px;
+            border-radius: 15px;
+            border: 3px solid #ffd700;
+            box-shadow: 0 0 20px rgba(255,215,0,0.5);
+            max-width: 500px;
+            margin: 20px auto;
+        }
+        .nobel-prize-section h2 {
+            color: #ffd700;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+        .nobel-prize-section p {
+            color: #e2e8f0;
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+        }
+        .nobel-prize-section strong {
+            color: #ffd700;
+        }
+        .nobel-prize-section .footer-text {
+            font-style: italic;
+            color: #00ffcc;
+            margin-top: 20px;
+            font-size: 0.9rem;
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Preloader -->
+    <div id="preloader">
+        <div class="atom">
+            <div class="electron e1"></div>
+            <div class="electron e2"></div>
+            <div class="electron e3"></div>
+        </div>
+        <p class="loading-text">Loading MintuVerse...</p>
+    </div>
+
+    <!-- Music Player -->
+    <div class="music-player">
+        <audio id="bg-music" src="audio/rabindra_sangeet.mp3" loop></audio> <!-- Use relative path for your audio -->
+        <button id="play-music">🎵 Play Rabindra Sangeet</button>
+    </div>
+
+    <!-- Message Box Element -->
+    <div id="messageBox" class="message-box">
+        <p id="messageBoxText"></p>
+        <button id="messageBoxClose">OK</button>
+    </div>
+
+    <!-- Sections -->
+    <div class="section active" id="section-1">
+        <h1 class="text-5xl md:text-7xl font-extrabold text-white drop-shadow-lg landing-animated-text" style="animation-delay: 0.5s;">
+            The Greatest Discovery of My Life...
+        </h1>
+        <p class="text-2xl md:text-3xl text-blue-200 mt-4 landing-animated-text" style="animation-delay: 1.0s;">
+            "...was having a father like you."
+        </p>
+        <button class="nav-btn" data-target="section-2">Begin Exploration</button>
+    </div>
+
+    <div class="section" id="section-2">
+        <h2>🔬 Scientist Profile: Dr. Mintu</h2>
+        <ul>
+            <li>Specialized in Dad Jokes & Patience Dynamics</li>
+            <li>Co-author of Kitchen Lab Experiments</li>
+            <li>Principal Investigator in Daughter’s Happiness Project</li>
+        </ul>
+        <blockquote>"If at first you don’t succeed, call it version 1.0!"</blockquote>
+        <div class="nav">
+            <button class="nav-btn" data-target="section-1">⬅️ Back</button>
+            <button class="nav-btn" data-target="section-3">Next ➡️</button>
+        </div>
+    </div>
+
+    <div class="section" id="section-3">
+        <h2>🧫 Memory Gallery</h2>
+        <div class="photo-grid">
+            <!-- Placeholder images - replace with your actual photos, use relative paths -->
+            <img src="images/photo1.png" alt="Memory 1">
+            <img src="images/photo2.png" alt="Memory 2">
+            <img src="images/photo3.png" alt="Memory 3">
+            <img src="images/photo4.png" alt="Memory 4">
+            <img src="images/photo5.png" alt="Memory 5">
+            <img src="images/photo6.png" alt="Memory 6">
+        </div>
+        <blockquote>"Time flies faster than light... unless you're napping!"</blockquote>
+        <div class="nav">
+            <button class="nav-btn" data-target="section-2">⬅️ Back</button>
+            <button class="nav-btn" data-target="section-4">Next ➡️</button>
+        </div>
+    </div>
+
+    <div class="section" id="section-4">
+        <h2>🎥 Special Message</h2>
+        <video controls>
+            <!-- Replace with your actual video URL, use relative path for your video -->
+            <source src="videos/birthday_message.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <div class="nav">
+            <button class="nav-btn" data-target="section-3">⬅️ Back</button>
+            <button class="nav-btn" data-target="section-5">Next ➡️</button>
+        </div>
+    </div>
+
+    <div class="section" id="section-5">
+        <h2>📐 Equation of Love</h2>
+        <p><code>L = ∫(Mintu × Time) dt from t = 0 to ∞</code></p>
+        <p><code>Where L = Limitless Love ❤️</code></p>
+        <div class="nav">
+            <button class="nav-btn" data-target="section-4">⬅️ Back</button>
+            <button class="nav-btn" data-target="section-6">Next ➡️</button>
+        </div>
+    </div>
+
+    <div class="section" id="section-6">
+        <h2 class="text-3xl font-bold text-green-400 mb-6">Papa’s Birthday Mission Panel</h2>
+        <div class="bg-gray-800 p-6 rounded-xl border-2 border-green-400 shadow-xl text-white font-mono-space w-full max-w-lg">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-left">
+                <div>
+                    <p class="text-gray-400 text-sm">MODULE:</p>
+                    <p class="text-lg text-white">Date</p>
+                </div>
+                <div>
+                    <p class="text-gray-400 text-sm">DESCRIPTION:</p>
+                    <p class="text-lg text-white">July 17th – Scientist Papa was born. The world got cooler.</p>
+                </div>
+                <div>
+                    <p class="text-gray-400 text-sm">MODULE:</p>
+                    <p class="text-lg text-white">Research Area</p>
+                </div>
+                <div>
+                    <p class="text-gray-400 text-sm">DESCRIPTION:</p>
+                    <p class="text-lg text-white">Best Dad Energy, Endless Love, Expert in Dad Jokes</p>
+                </div>
+                <div class="md:col-span-2">
+                    <p class="text-gray-400 text-sm">MODULE:</p>
+                    <p class="text-lg text-white">Formula for Love</p>
+                </div>
+                <div class="md:col-span-2">
+                    <p class="text-gray-400 text-sm">DESCRIPTION:</p>
+                    <p class="text-lg text-white">Me + You + Infinite Care – Distance = Always Connected</p>
+                </div>
+            </div>
+            <button class="mt-6 bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-5 rounded-lg shadow-md transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-green-400">
+                Activate Sub-Systems
+            </button>
+        </div>
+        <div class="nav">
+            <button class="nav-btn" data-target="section-5">⬅️ Back</button>
+            <button class="nav-btn" data-target="section-7">Next ➡️</button>
+        </div>
+    </div>
+
+    <!-- Section 7: Guitar Vibes -->
+    <div class="section" id="section-7">
+        <h2>🎸 Guitar Vibes</h2>
+        <p>Strings of emotion tuned to Dad’s rhythm.</p>
+        <p class="quote">“Tumi robe nirobe…”</p>
+        <div class="nav">
+            <button class="nav-btn" data-target="section-6">⬅️ Back</button>
+            <button class="nav-btn" data-target="section-8">Next ➡️</button>
+        </div>
+    </div>
+
+    <!-- Section 8: Mintu’s Lab Results -->
+    <div class="section" id="section-8">
+        <h2>🧪 Mintu’s Lab Results</h2>
+        <div class="lab-report">
+            <p><strong>Subject:</strong> Dr. Mintu</p>
+            <p><strong>Research Area:</strong> Physics + Fatherhood</p>
+            <p><strong>Published Papers:</strong> “Theory of Infinite Patience”</p>
+            <p><strong>Conclusion:</strong> 100% Awesomeness Confirmed</p>
+        </div>
+        <div class="bubbling-tubes">
+            <div class="tube"></div>
+            <div class="tube"></div>
+            <div class="tube"></div>
+        </div>
+        <div class="nav">
+            <button class="nav-btn" data-target="section-7">⬅️ Back</button>
+            <button class="nav-btn" data-target="section-9">Next ➡️</button>
+        </div>
+    </div>
+
+    <!-- Section 9: Space-Time Memories -->
+    <div class="section" id="section-9">
+        <h2>🌌 Space-Time Memories</h2>
+        <div class="space-bg">
+            <p class="fade-text" style="--i: 1;">“No telescope needed to see how far your love reaches.”</p>
+            <p class="fade-text" style="--i: 2;">“Time warps when I think of all our memories.”</p>
+            <p class="fade-text" style="--i: 3;">“Happy Birthday from Hyderabad to Kolkata across light years!”</p>
+            <div class="rocket">🚀 Mintu-1</div>
+        </div>
+        <div class="nav">
+            <button class="nav-btn" data-target="section-8">⬅️ Back</button>
+            <button class="nav-btn" data-target="section-10">Next ➡️</button>
+        </div>
+    </div>
+
+    <!-- Section 10: Secret Scientific Archive -->
+    <div class="section" id="section-10">
+        <h2>🧪 Secret Scientific Archive</h2>
+        <div class="scratch-card-container">
+            <p class="secret-message">"You're the reason I know what love feels like every day."</p>
+            <div id="scratchOverlay" class="scratch-overlay">
+                <span class="font-mono-space">"Only Authorized Dads Can Access This File"</span>
+            </div>
+        </div>
+        <p class="text-sm text-gray-500 mt-4">
+            (Click or hover to decrypt the message!)
+        </p>
+        <div class="nav">
+            <button class="nav-btn" data-target="section-9">⬅️ Back</button>
+            <button class="nav-btn" data-target="section-11">Next ➡️</button>
+        </div>
+    </div>
+
+    <!-- Section 11: Digital Nobel Prize -->
+    <div class="section nobel-prize-section" id="section-11">
+        <h2>Your Digital Nobel Prize!</h2>
+        <div id="giftBox" class="relative bg-orange-400 w-64 h-64 mx-auto rounded-xl flex flex-col items-center justify-center cursor-pointer shadow-lg transition-all duration-300 ease-in-out hover:scale-105">
+            <span class="text-white text-6xl font-extrabold mb-2">🏆</span>
+            <span class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white text-lg font-bold text-center">Click to Claim Your Prize!</span>
+        </div>
+        <div id="giftContents" class="hidden mt-6 text-left space-y-4 bg-white p-6 rounded-lg shadow-md border border-orange-200 text-black">
+            <h3 class="text-xl font-bold text-orange-800 border-b-2 border-orange-300 pb-2 mb-4">Official Nobel Prize Certificate:</h3>
+            <div class="bg-yellow-50 p-4 rounded-lg border border-yellow-200 text-center">
+                <p class="text-2xl font-extrabold text-yellow-700 mb-2">NOBEL PRIZE</p>
+                <p class="text-lg font-semibold text-gray-800 mb-1">Awarded to:</p>
+                <p class="text-3xl font-bold text-blue-800 mb-3">[Dad's Name]</p>
+                <p class="text-base text-gray-700 mb-2">For excellence in:</p>
+                <p class="text-xl font-bold text-green-700">Emotional Intelligence, Patience, and Bedtime Stories.</p>
+                <p class="text-sm text-gray-600 mt-4">Presented by: Your Proudest Invention</p>
+            </div>
+        </div>
+        <div class="nav">
+            <button class="nav-btn" data-target="section-10">⬅️ Back</button>
+            <button class="nav-btn" data-target="section-12">Next ➡️</button>
+        </div>
+    </div>
+
+    <!-- Section 12: Visual Data Transmission (Embedded Video Message) -->
+    <div class="section" id="section-12">
+        <h2>Visual Data Transmission:</h2>
+        <div class="relative w-full max-w-lg mx-auto rounded-xl overflow-hidden shadow-lg border-4 border-red-500 aspect-video">
+            <!-- Thumbnail overlay -->
+            <div id="videoThumbnail" class="absolute inset-0 bg-cover bg-center flex items-center justify-center cursor-pointer"
+                 style="background-image: url('https://placehold.co/600x400/fee2e2/991b1b?text=Activate+Visual+Feed+%F0%9F%A5%BA');">
+                <button class="bg-red-700 hover:bg-red-800 text-white p-4 rounded-full shadow-xl transition duration-300 ease-in-out transform hover:scale-110 focus:outline-none focus:ring-4 focus:ring-red-400">
+                    <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"></path></svg>
+                </button>
+            </div>
+            <!-- YouTube iframe (initially hidden) -->
+            <iframe id="youtubeVideo" class="absolute inset-0 w-full h-full hidden"
+                    src="https://www.youtube.com/embed/dQw4w9WgXcQ?enablejsapi=1"
+                    frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+            </iframe>
+        </div>
+        <p class="text-sm text-gray-500 mt-4">
+            (Remember to replace the YouTube video URL with your unlisted video!)
+        </p>
+        <div class="nav">
+            <button class="nav-btn" data-target="section-11">⬅️ Back</button>
+            <button class="nav-btn" data-target="section-13">Next ➡️</button>
+        </div>
+    </div>
+
+    <!-- Section 13: Audio Log: Personal Transmission! -->
+    <div class="section" id="section-13">
+        <h2>Audio Log: Personal Transmission!</h2>
+        <audio id="surpriseVoiceClip">
+            <!-- Replace with your actual voice clip URL, use relative path for your audio -->
+            <source src="audio/birthday_message.mp3" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
+        <button id="playVoiceButton" class="bg-teal-700 hover:bg-teal-800 text-white font-bold py-3 px-6 rounded-full shadow-lg transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-teal-400">
+            🔊 Initiate Audio Playback
+        </button>
+        <p class="text-sm text-gray-500 mt-4">
+            (Don't forget to replace the audio URL with your recorded message!)
+        </p>
+        <div class="nav">
+            <button class="nav-btn" data-target="section-12">⬅️ Back</button>
+            <button class="nav-btn" data-target="section-14">Next ➡️</button>
+        </div>
+    </div>
+
+    <!-- Section 14: Analysis: Reasons for Papa's Awesomeness -->
+    <div class="section" id="section-14">
+        <h2>Analysis: Reasons for Papa's Awesomeness</h2>
+        <ul id="reasonsList" class="list-disc list-inside text-left text-lg text-gray-800 space-y-2 max-w-md mx-auto">
+            <li>Your amazing sense of humor (even the dad jokes!).</li>
+            <li>Always knowing how to fix things (even when they're not broken).</li>
+            <li>Your endless patience and support.</li>
+            <li>Being the best listener.</li>
+            <li>Making the best pancakes on Sundays.</li>
+        </ul>
+        <button id="addReasonButton" class="bg-green-700 hover:bg-green-800 text-white font-bold py-2 px-5 rounded-full shadow-lg transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-green-400 mt-4">
+            Add New Data Point
+        </button>
+        <input type="text" id="newReasonInput" class="w-full p-2 rounded-lg border-2 border-green-400 focus:outline-none focus:border-green-600 mt-3 text-gray-700 hidden font-mono-space max-w-md" placeholder="Enter a new reason/data point...">
+        <p id="reasonErrorMessage" class="text-red-600 text-sm mt-2 hidden">Error: Input field cannot be empty. Please enter a valid data point.</p>
+        <div class="nav">
+            <button class="nav-btn" data-target="section-13">⬅️ Back</button>
+            <button class="nav-btn" data-target="section-15">Next ➡️</button>
+        </div>
+    </div>
+
+    <!-- Section 15: Digital Blueprint: Your Birthday Card! -->
+    <div class="section" id="section-15">
+        <h2>Digital Blueprint: Your Birthday Card!</h2>
+        <div class="w-full max-w-lg mx-auto rounded-xl overflow-hidden shadow-lg border-4 border-cyan-500 aspect-video">
+            <!-- Replace with your actual Canva embed code/link -->
+            <iframe src="https://www.canva.com/design/DAGIr260D_s/view?embed" allowfullscreen="allowfullscreen" allow="fullscreen"
+                    class="w-full h-full">
+            </iframe>
+        </div>
+        <p class="text-sm text-gray-500 mt-4">
+            (Remember to replace the Canva embed URL with your actual design!)
+        </p>
+        <div class="nav">
+            <button class="nav-btn" data-target="section-14">⬅️ Back</button>
+            <button class="nav-btn" data-target="section-16">Next ➡️</button>
+        </div>
+    </div>
+
+    <!-- Section 16: Inter-Dimensional Communication Log -->
+    <div class="section" id="section-16">
+        <h2>Inter-Dimensional Communication Log</h2>
+        <div class="chat-container">
+            <div class="chat-message dad">
+                <div class="chat-bubble dad">Are you crying?</div>
+            </div>
+            <div class="chat-message me">
+                <div class="chat-bubble me">You wish 😎</div>
+            </div>
+            <div class="chat-message dad">
+                <div class="chat-bubble dad">Miss you kiddo.</div>
+            </div>
+            <div class="chat-message me">
+                <div class="chat-bubble me">Always. Happy Birthday ❤️</div>
+            </div>
+        </div>
+        <div class="nav">
+            <button class="nav-btn" data-target="section-15">⬅️ Back</button>
+            <button class="nav-btn" data-target="section-1">Start Over</button>
+        </div>
+    </div>
+
+    <!-- Bonus: Footer -->
+    <footer class="w-full bg-gray-900 text-gray-400 text-center p-4 mt-8 font-mono-space text-sm z-10">
+        Made with ❤️ in the Hyderabad Lab by your proudest invention — Prasamita
+    </footer>
+
+    <script>
+        // --- Global Variables & Initial Setup ---
+        const messageBox = document.getElementById('messageBox');
+        const messageBoxText = document.getElementById('messageBoxText');
+        const messageBoxClose = document.getElementById('messageBoxClose');
+
+        // Function to show custom message box
+        function showMessageBox(message) {
+            messageBoxText.textContent = message;
+            messageBox.style.display = 'block';
+        }
+
+        // Close message box
+        messageBoxClose.addEventListener('click', () => {
+            messageBox.style.display = 'none';
+        });
+
+        // --- Preloader removal ---
+        window.addEventListener('load', () => {
+            const preloader = document.getElementById('preloader');
+            if (preloader) {
+                preloader.style.opacity = '0';
+                preloader.style.transition = 'opacity 1s ease';
+                setTimeout(() => {
+                    preloader.style.display = 'none';
+                }, 1000);
+            }
+            // Generate confetti on page load (after preloader is gone or immediately if no preloader)
+            for (let i = 0; i < 50; i++) {
+                createConfetti();
+            }
+        });
+
+        // --- Confetti Effect ---
+        function createConfetti() {
+            const confetti = document.createElement('div');
+            confetti.classList.add('confetti');
+            confetti.style.left = Math.random() * 100 + 'vw';
+            const colors = ['#818cf8', '#6366f1', '#a78bfa', '#c4b5fd', '#a3e635', '#22c55e', '#16a34a'];
+            confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+            confetti.style.animationDuration = (Math.random() * 2 + 3) + 's';
+            confetti.style.animationDelay = (Math.random() * 0.5) + 's';
+            document.body.appendChild(confetti);
+
+            confetti.addEventListener('animationend', () => {
+                confetti.remove();
+            });
+        }
+
+        // --- Section navigation ---
+        document.querySelectorAll('.nav-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                const targetId = button.getAttribute('data-target');
+                document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active'));
+                document.getElementById(targetId).classList.add('active');
+
+                // Special handling for transmission section to start typing effect
+                if (targetId === 'section-5') {
+                    startTransmissionTyping();
+                }
+            });
+        });
+
+        // --- Music play/pause toggle ---
+        const playBtn = document.getElementById('play-music');
+        const bgMusic = document.getElementById('bg-music');
+        if (playBtn && bgMusic) {
+            playBtn.addEventListener('click', () => {
+                if (bgMusic.paused) {
+                    bgMusic.play();
+                    playBtn.textContent = '⏸️ Pause Music';
+                } else {
+                    bgMusic.pause();
+                    playBtn.textContent = '🎵 Play Rabindra Sangeet';
+                }
+            });
+        }
+
+        // --- Reasons I Love You Section (Analysis: Reasons for Papa's Awesomeness) ---
+        const reasonsList = document.getElementById('reasonsList');
+        const addReasonButton = document.getElementById('addReasonButton');
+        const newReasonInput = document.getElementById('newReasonInput');
+        const reasonErrorMessage = document.getElementById('reasonErrorMessage');
+
+        if (reasonsList && addReasonButton && newReasonInput && reasonErrorMessage) {
+            addReasonButton.addEventListener('click', () => {
+                if (newReasonInput.classList.contains('hidden')) {
+                    newReasonInput.classList.remove('hidden');
+                    newReasonInput.focus();
+                    addReasonButton.textContent = 'Add This Data Point';
+                    reasonErrorMessage.classList.add('hidden');
+                } else {
+                    const newReasonText = newReasonInput.value.trim();
+                    if (newReasonText) {
+                        const listItem = document.createElement('li');
+                        listItem.textContent = newReasonText;
+                        reasonsList.appendChild(listItem);
+                        newReasonInput.value = '';
+                        newReasonInput.classList.add('hidden');
+                        addReasonButton.textContent = 'Add New Data Point';
+                        reasonErrorMessage.classList.add('hidden');
+                    } else {
+                        showMessageBox("Error: Input field cannot be empty. Please enter a valid data point.");
+                    }
+                }
+            });
+        }
+
+        // --- Embedded Video Message (Visual Data Transmission) ---
+        const videoThumbnail = document.getElementById('videoThumbnail');
+        const youtubeVideo = document.getElementById('youtubeVideo');
+        if (videoThumbnail && youtubeVideo) {
+            videoThumbnail.addEventListener('click', () => {
+                videoThumbnail.classList.add('hidden');
+                youtubeVideo.classList.remove('hidden');
+                youtubeVideo.src += "&autoplay=1";
+            });
+        }
+
+        // --- Voice Message Button (Audio Log: Personal Transmission!) ---
+        const surpriseVoiceClip = document.getElementById('surpriseVoiceClip');
+        const playVoiceButton = document.getElementById('playVoiceButton');
+        let isVoicePlaying = false;
+        if (surpriseVoiceClip && playVoiceButton) {
+            playVoiceButton.addEventListener('click', () => {
+                if (isVoicePlaying) {
+                    surpriseVoiceClip.pause();
+                    playVoiceButton.textContent = '🔊 Initiate Audio Playback';
+                } else {
+                    surpriseVoiceClip.play();
+                    playVoiceButton.textContent = '⏸️ Pause Audio Playback';
+                }
+                isVoicePlaying = !isVoicePlaying;
+            });
+
+            surpriseVoiceClip.addEventListener('ended', () => {
+                playVoiceButton.textContent = '🔊 Initiate Audio Playback';
+                isVoicePlaying = false;
+            });
+        }
+
+        // --- Digital Gift Section (Digital Nobel Prize) ---
+        const giftBox = document.getElementById('giftBox');
+        const giftContents = document.getElementById('giftContents');
+        if (giftBox && giftContents) {
+            giftBox.addEventListener('click', () => {
+                giftBox.classList.add('hidden');
+                giftContents.classList.remove('hidden');
+            });
+        }
+
+        // --- Secret Message Revealer (Secret Scientific Archive) ---
+        const scratchOverlay = document.getElementById('scratchOverlay');
+        if (scratchOverlay) {
+            scratchOverlay.addEventListener('mouseover', () => {
+                scratchOverlay.classList.add('revealed');
+            });
+
+            scratchOverlay.addEventListener('click', () => {
+                scratchOverlay.classList.add('revealed');
+            });
+        }
+
+        // --- Transmission Message Typing Effect ---
+        const transmissionMessageElement = document.getElementById('transmissionMessage');
+        const transmissionText = "Happy Birthday Papa 💙 Even though we’re cities apart, you’re always in every part of my day — like gravity, constant and strong.";
+        let charIndex = 0;
+
+        function typeTransmissionMessage() {
+            if (transmissionMessageElement && charIndex < transmissionText.length) {
+                transmissionMessageElement.textContent += transmissionText.charAt(charIndex);
+                charIndex++;
+                setTimeout(typeTransmissionMessage, 50);
+            }
+        }
+
+        function startTransmissionTyping() {
+            if (transmissionMessageElement) {
+                transmissionMessageElement.textContent = '';
+                charIndex = 0;
+                typeTransmissionMessage();
+            }
+        }
+
+    </script>
+</body>
+</html>
